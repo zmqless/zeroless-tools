@@ -1,10 +1,9 @@
-import sys
 import io
-
+import sys
 import pytest
 
 from zeroless import (Server, Client)
-from zeroless_tools import (helpers)
+from zeroless_tools import SocketExecutor
 
 @pytest.fixture(scope="module")
 def listen_for_push():
@@ -16,7 +15,7 @@ def push():
     client.connect_local(port=7892)
     return client.push()
 
-class TestReqRep:
+class TestZerolessHelpers:
     def test_communication(self, push, listen_for_push):
         msg = ['msg1\n']
 
@@ -32,8 +31,8 @@ class TestReqRep:
 
             input.writelines(msg)
             input.seek(0)
-            helpers.wait_and_write(push, 1)
-            helpers.read_and_print(listen_for_push)
+            SocketExecutor.wait_and_write(push, 1)
+            SocketExecutor.read_and_print(listen_for_push)
             output.seek(0)
             received_msgs = output.readlines()
 
@@ -58,8 +57,8 @@ class TestReqRep:
 
             input.writelines(msgs)
             input.seek(0)
-            helpers.wait_and_write(push, len(msgs))
-            helpers.read_and_print(listen_for_push, len(msgs))
+            SocketExecutor.wait_and_write(push, len(msgs))
+            SocketExecutor.read_and_print(listen_for_push, len(msgs))
             output.seek(0)
             received_msgs = output.readlines()
 

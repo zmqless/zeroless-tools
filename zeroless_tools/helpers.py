@@ -1,85 +1,47 @@
 import sys
 
-def read_and_print(receiver, num_parts=1):
-    for i in range(num_parts):
-        data = next(receiver)
-
-        if isinstance(data, bytes):
-            print(data.decode("utf-8"))
-        else:
-            for part in data:
-                print(str(data))
-
-def wait_and_write(sender, num_parts):
-    for i in range(num_parts):
-        data = input().encode()
-        sender(data)
+from .SocketExecutor import *
 
 def pub(socket, args):
-    sender = socket.pub(topic=args.topic)
-
-    while True:
-        wait_and_write(sender, args.numParts)
+    return PubExecutor(socket, args.numParts, args.topic)
 
 def sub(socket, args):
-    receiver = socket.sub(topics=args.topics)
-
-    while True:
-        read_and_print(receiver)
+    return SubExecutor(socket, args.numParts, args.topics)
 
 def push(socket, args):
-    sender = socket.push()
-
-    while True:
-        wait_and_write(sender, args.numParts)
+    return PushExecutor(socket, args.numParts)
 
 def pull(socket, args):
-    receiver = socket.pull()
-
-    while True:
-        read_and_print(receiver)
+    return PullExecutor(socket, args.numParts)
 
 def req(socket, args):
-    sender, receiver = socket.request()
-
-    while True:
-        wait_and_write(sender, args.numParts)
-        read_and_print(receiver)
+    return ReqExecutor(socket, args.numParts)
 
 def rep(socket, args):
-    sender, receiver = socket.reply()
-
-    while True:
-        read_and_print(receiver)
-        wait_and_write(sender, args.numParts)
+    return RepExecutor(socket, args.numParts)
 
 def read_only_pair(socket, args):
-    _, receiver = socket.pair()
-
-    while True:
-        read_and_print(receiver)
+    return ReadOnlyPairExecutor(socket, args.numParts)
 
 def write_only_pair(socket, args):
-    sender, _ = socket.pair()
-
-    while True:
-        wait_and_write(sender, args.numParts)
+    return WriteOnlyPairExecutor(socket, args.numParts)
 
 def add_sender_command(subparser, name, callback):
     subparser = subparser.add_parser(name)
-    subparser.add_argument('-n', '--numParts', type=int, default=1)
-    subparser.set_defaults(run=callback)
+    subparser.set_defaults(socket_executor=callback)
     return subparser
 
 def add_receiver_command(subparser, name, callback):
     subparser = subparser.add_parser(name)
-    subparser.set_defaults(run=callback)
+    subparser.set_defaults(socket_executor=callback)
     return subparser
 
 def add_sub_commands(parser):
     parser.add_argument('port', action='store', type=int,
                         choices=range(1024,65535), metavar="[a port between 1024 and 65535]",
                         help='an open port in the provided IP')
+
+    parser.add_argument('-n', '--numParts', type=int, default=1)
 
     subparsers = parser.add_subparsers(title='pattern',
                                        description='available pattern')
@@ -107,9 +69,9 @@ def add_sub_commands(parser):
                                                  'read-only',
                                                  read_only_pair)
 
-def run_forever(args, socket):
+def run(socket_executor):
     try:
-        args.run(socket, args)
+        socket_executor.execute()
     except EOFError:
         sys.exit()
     except KeyboardInterrupt:

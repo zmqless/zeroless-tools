@@ -1,7 +1,8 @@
+import sys
 import argparse
 
 from zeroless import Server
-from .helpers import add_sub_commands, run_forever
+from .helpers import (add_sub_commands, run)
 
 def get_parser():
     parser = argparse.ArgumentParser(prog='Zeroless Server Cli',
@@ -11,10 +12,16 @@ def get_parser():
     add_sub_commands(parser)
     return parser
 
-def main():
+def zeroserver(args):
     parser = get_parser()
-    args = parser.parse_args()
+    parsed_args = parser.parse_args(args)
+    server = Server(port=parsed_args.port)
+    socket_executor = parsed_args.socket_executor(server, parsed_args)
 
-    server = Server(port=args.port)
+    return socket_executor
 
-    run_forever(args, server)
+def main(args=sys.argv):
+    socket_executor = zeroserver(args)
+
+    while True:
+        run(socket_executor)
