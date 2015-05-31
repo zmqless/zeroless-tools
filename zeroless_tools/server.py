@@ -20,7 +20,7 @@ def zeroserver(args):
 
     return socket_executor
 
-def main(args=sys.argv):
+def main(args=sys.argv[1:]):
     socket_executor = zeroserver(args)
 
     while True:
