@@ -21,7 +21,7 @@ def readme():
         return f.read()
 
 setup(name='zeroless_tools',
-      version='0.1.0',
+      version='0.1.1',
       description='CLI Tools for ZeroMQ™',
       long_description=readme(),
       packages=['zeroless_tools'],
