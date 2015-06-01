@@ -8,7 +8,7 @@ def get_parser():
     parser = argparse.ArgumentParser(prog='Zeroless Client Cli',
                                      description='',
                                      epilog='')
-    parser.add_argument('-i', '--ip', action='store', type=str,
+    parser.add_argument('-i', '--ip', type=str,
                         default='127.0.0.1',
                         help='an IP to connect to')
 
@@ -24,7 +24,7 @@ def zeroclient(args):
 
     return socket_executor
 
-def main(args=sys.argv):
+def main(args=sys.argv[1:]):
     socket_executor = zeroclient(args)
 
     while True:

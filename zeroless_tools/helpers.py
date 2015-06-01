@@ -37,7 +37,7 @@ def add_receiver_command(subparser, name, callback):
     return subparser
 
 def add_sub_commands(parser):
-    parser.add_argument('port', action='store', type=int,
+    parser.add_argument('port', type=int,
                         choices=range(1024,65535), metavar="[a port between 1024 and 65535]",
                         help='an open port in the provided IP')
 
