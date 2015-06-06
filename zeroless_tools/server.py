@@ -6,8 +6,8 @@ from .helpers import (add_sub_commands, run)
 
 def get_parser():
     parser = argparse.ArgumentParser(prog='Zeroless Server Cli',
-                                     description='',
-                                     epilog='')
+                                     description="""The Zeroless Server Cli shall create an endpoint for accepting
+                                                 connections and bind it to the chosen ØMQ messaging pattern""")
 
     add_sub_commands(parser)
     return parser
