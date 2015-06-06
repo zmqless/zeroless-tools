@@ -1,7 +1,14 @@
 Zeroless Tools
 ==============
 
-The Zeroless Command Line Interface (CLI).
+Most people used to networking programming are aware that NetCat is a very useful tool
+to establish and test TCP/UDP connections on the fly. The ZeroMQ community, however, do
+not provide an equivalent application. So that, in order to test your ZMQ sockets, you
+would have to code your own solution. For tackling that issue, the Zeroless Command
+Line Interface (CLI) was created.
+
+So that you can test your 0MQ connections in a language agnostic fashion, despite the
+used messaging pattern.
 
 Installation
 ------------
