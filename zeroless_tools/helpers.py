@@ -26,47 +26,63 @@ def read_only_pair(socket, args):
 def write_only_pair(socket, args):
     return WriteOnlyPairExecutor(socket, args.numParts)
 
-def add_sender_command(subparser, name, callback):
-    subparser = subparser.add_parser(name)
+def add_sender_command(subparser, name, description, callback):
+    subparser = subparser.add_parser(name, description=description)
     subparser.set_defaults(socket_executor=callback)
     return subparser
 
-def add_receiver_command(subparser, name, callback):
-    subparser = subparser.add_parser(name)
+def add_receiver_command(subparser, name, description, callback):
+    subparser = subparser.add_parser(name, description=description)
     subparser.set_defaults(socket_executor=callback)
     return subparser
 
 def add_sub_commands(parser):
     parser.add_argument('port', type=int,
                         choices=range(1024,65535), metavar="[a port between 1024 and 65535]",
-                        help='an open port in the provided IP')
+                        help='the open port to bind/connect to')
 
-    parser.add_argument('-n', '--numParts', type=int, default=1)
+    parser.add_argument('-n', '--numParts', type=int, default=1,
+                        help='the amount of frames per message (default=1)')
 
     subparsers = parser.add_subparsers(title='pattern',
-                                       description='available pattern')
+                                       description='''The ØMQ API provides sockets (a kind of generalization
+                                                   over the traditional IP and Unix domain sockets),
+                                                   each of them can represent a many-to-many
+                                                   connection between endpoints''',
+                                       help='''Choose among Publish/Subscribe (Pub/Sub), Request/Reply (Req/Rep),
+                                            Pipeline (Push/Pull) and Exclusive Pair (Pair)''')
 
-    parser_pub = add_sender_command(subparsers, 'pub', pub)
-    parser_pub.add_argument('-t', '--topic', type=bytes, default=b'')
+    parser_pub = add_sender_command(subparsers, 'pub', 'This is a data distribution pattern', pub)
+    parser_pub.add_argument('-t', '--topic', type=str, default='',
+                            help='the topic that messages are published to (default=all)')
 
-    parser_sub = add_receiver_command(subparsers, 'sub', sub)
-    parser_sub.add_argument('-t', '--topics', type=list, default=[b''])
+    parser_sub = add_receiver_command(subparsers, 'sub', 'This is a data distribution pattern', sub)
+    parser_sub.add_argument('-t', '--topics', type=list, default=[''],
+                            help='the list of topics to subscribe to (default=all)')
 
-    parser_push = add_sender_command(subparsers, 'push', push)
-    parser_pull = add_receiver_command(subparsers, 'pull', pull)
-    parser_req = add_sender_command(subparsers, 'req', req)
-    parser_rep = add_receiver_command(subparsers, 'rep', rep)
+    parser_push = add_sender_command(subparsers, 'push',
+                                     'This is a parallel task distribution and collection pattern', push)
+    parser_pull = add_receiver_command(subparsers, 'pull',
+                                       'This is a parallel task distribution and collection pattern', pull)
+    parser_req = add_sender_command(subparsers, 'req',
+                                    'This is a remote procedure call and task distribution pattern', req)
+    parser_rep = add_receiver_command(subparsers, 'rep',
+                                      'This is a remote procedure call and task distribution pattern', rep)
 
-    parser_pair = subparsers.add_parser('pair')
-    pair_subparsers = parser_pair.add_subparsers(title='pattern',
-                                       description='available pattern')
+    parser_pair = subparsers.add_parser('pair',
+                                        description='This is an advanced low-level pattern for specific use cases')
+
+    pair_subparsers = parser_pair.add_subparsers(title='mode',
+                                                 description='the mode of operation of the Exclusive Pair pattern',
+                                                 help='Due to a current limitation, you cannot read and write '
+                                                      'at the same Exclusive Pair connection')
 
     parser_write_only_pair = add_sender_command(pair_subparsers,
-                                                'write-only',
+                                                'write-only', '',
                                                 write_only_pair)
 
     parser_read_only_pair = add_receiver_command(pair_subparsers,
-                                                 'read-only',
+                                                 'read-only', '',
                                                  read_only_pair)
 
 def run(socket_executor):
