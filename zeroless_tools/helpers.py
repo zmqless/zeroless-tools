@@ -37,6 +37,10 @@ def add_receiver_command(subparser, name, description, callback):
     return subparser
 
 def add_sub_commands(parser):
+    parser.epilog = """This program is free software: you can redistribute it and/or modify it under the terms
+                    of the GNU General Public License as published by the Free Software Foundation, either
+                    version 3 of the License, or (at your option) any later version"""
+
     parser.add_argument('port', type=int,
                         choices=range(1024,65535), metavar="[a port between 1024 and 65535]",
                         help='the open port to bind/connect to')
