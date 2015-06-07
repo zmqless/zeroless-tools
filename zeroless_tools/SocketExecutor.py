@@ -15,7 +15,7 @@ def wait_and_write(sender, num_parts):
 
 class PubExecutor:
     def __init__(self, socket, num_parts, topic):
-        self._sender = socket.pub(topic=topic)
+        self._sender = socket.pub(topic=topic.encode('utf-8'))
         self._num_parts = num_parts
 
     def execute(self):
@@ -23,7 +23,7 @@ class PubExecutor:
 
 class SubExecutor:
     def __init__(self, socket, num_parts, topics):
-        self._receiver = socket.sub(topics=topics)
+        self._receiver = socket.sub(topics=[topic.encode('utf-8') for topic in topics])
         self._num_parts = num_parts
 
     def execute(self):
