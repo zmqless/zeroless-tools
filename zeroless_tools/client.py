@@ -6,11 +6,11 @@ from .helpers import (add_sub_commands, run)
 
 def get_parser():
     parser = argparse.ArgumentParser(prog='Zeroless Client Cli',
-                                     description='',
-                                     epilog='')
+                                     description="""The Zeroless Client Cli shall connect to the specified
+                                                 endpoint using the chosen ØMQ messaging pattern""")
     parser.add_argument('-i', '--ip', type=str,
                         default='127.0.0.1',
-                        help='an IP to connect to')
+                        help="the IP of the endpoint to connect to (default=127.0.0.1)")
 
     add_sub_commands(parser)
     return parser
