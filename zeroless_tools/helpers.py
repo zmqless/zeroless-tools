@@ -45,14 +45,12 @@ def add_sub_commands(parser):
                         choices=range(1024,65535), metavar="[a port between 1024 and 65535]",
                         help='the open port to bind/connect to')
 
-    parser.add_argument('-n', '--numParts', type=int, default=1,
-                        help='the amount of frames per message (default=1)')
+    parser.add_argument('-n', '--numParts', metavar="amount of parts", type=int, default=1,
+                        help='the amount of parts (i.e. frames) per message (default=1)')
 
-    subparsers = parser.add_subparsers(title='pattern',
-                                       description='''The ØMQ API provides sockets (a kind of generalization
-                                                   over the traditional IP and Unix domain sockets),
-                                                   each of them can represent a many-to-many
-                                                   connection between endpoints''',
+    subparsers = parser.add_subparsers(title='messaging pattern',
+                                       description='''The ØMQ API implements several messaging patterns, each
+                                                   one defining a particular network topology''',
                                        help='''Choose among Publish/Subscribe (Pub/Sub), Request/Reply (Req/Rep),
                                             Pipeline (Push/Pull) and Exclusive Pair (Pair)''')
 
