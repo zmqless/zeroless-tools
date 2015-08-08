@@ -1,3 +1,6 @@
+import sys
+import warnings
+
 def read_and_print(receiver, num_parts=1):
     for i in range(num_parts):
         data = next(receiver)
@@ -6,24 +9,32 @@ def read_and_print(receiver, num_parts=1):
             print(data.decode("utf-8"))
         else:
             for part in data:
-                print(str(data))
+                print(part.decode('utf-8'))
 
 def wait_and_write(sender, num_parts):
     for i in range(num_parts):
-        data = input().encode()
+        data = input().encode('utf-8')
         sender(data)
 
 class PubExecutor:
-    def __init__(self, socket, num_parts, topic):
-        self._sender = socket.pub(topic=topic.encode('utf-8'))
+    def __init__(self, socket, num_parts, topic, embed_topic):
+        self._sender = socket.pub(topic=topic.encode('utf-8'), embed_topic=embed_topic)
         self._num_parts = num_parts
 
     def execute(self):
-        wait_and_write(self._sender, self._num_parts)
+        try:
+            wait_and_write(self._sender, self._num_parts)
+        except ValueError:
+            print("ERROR: The message was not sent, since the topic was not in"
+                  " the beginning of the first frame of the message. If you want"
+                  " the topic to be automatically sent, set the --embedTopic flag."
+                  , file=sys.stderr)
 
 class SubExecutor:
     def __init__(self, socket, num_parts, topics):
-        self._receiver = socket.sub(topics=[topic.encode('utf-8') for topic in topics])
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            self._receiver = socket.sub(topics=[topic.encode('utf-8') for topic in topics])
         self._num_parts = num_parts
 
     def execute(self):
