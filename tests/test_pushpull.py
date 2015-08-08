@@ -11,8 +11,8 @@ from zeroless_tools import SocketExecutor
 
 class TestPushPull:
     def test_executors(self):
-        server_socket_executor = zeroless_tools.server.zeroserver('7891 pull'.split())
-        client_socket_executor = zeroless_tools.client.zeroclient('7891 push'.split())
+        server_socket_executor = zeroless_tools.server.zeroserver('7711 pull'.split())
+        client_socket_executor = zeroless_tools.client.zeroclient('7711 push'.split())
 
         assert isinstance(server_socket_executor, SocketExecutor.PullExecutor)
         assert isinstance(client_socket_executor, SocketExecutor.PushExecutor)
@@ -33,8 +33,8 @@ class TestPushPull:
             input.writelines(msg)
             input.seek(0)
 
-            server_socket_executor = zeroless_tools.server.zeroserver('7892 pull'.split())
-            client_socket_executor = zeroless_tools.client.zeroclient('7892 push'.split())
+            server_socket_executor = zeroless_tools.server.zeroserver('7712 pull'.split())
+            client_socket_executor = zeroless_tools.client.zeroclient('7712 push'.split())
 
             helpers.run(client_socket_executor)
             helpers.run(server_socket_executor)
@@ -64,8 +64,8 @@ class TestPushPull:
             input.writelines(msg)
             input.seek(0)
 
-            server_socket_executor = zeroless_tools.server.zeroserver('7892 push'.split())
-            client_socket_executor = zeroless_tools.client.zeroclient('7892 pull'.split())
+            server_socket_executor = zeroless_tools.server.zeroserver('7713 push'.split())
+            client_socket_executor = zeroless_tools.client.zeroclient('7713 pull'.split())
 
             helpers.run(server_socket_executor)
             helpers.run(client_socket_executor)
