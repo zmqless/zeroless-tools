@@ -1,6 +1,12 @@
 Zeroless Tools
 ==============
 
+.. _badges_start:
+
+|Build Status| |Coverage Status| |Codacy| |PyPi| |Docs| |License|
+
+.. _badges_end:
+
 Most people used to networking programming are aware that NetCat is a very useful tool
 to establish and test TCP/UDP connections on the fly. The ZeroMQ community, however, do
 not provide an equivalent application. So that, in order to test your ZMQ sockets, you
@@ -146,3 +152,20 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .. _license_content_end:
+
+.. _available_badges_start:
+
+.. |Build Status| image:: https://img.shields.io/travis/zmqless/zeroless-tools.svg?style=flat
+   :target: https://travis-ci.org/zmqless/zeroless-tools
+.. |Coverage Status| image:: https://coveralls.io/repos/zmqless/zeroless-tools/badge.svg?branch=master&service=github
+   :target: https://coveralls.io/github/zmqless/zeroless-tools?branch=master
+.. |Docs| image:: https://readthedocs.org/projects/zeroless-tools/badge/?version=latest
+   :target: https://readthedocs.org/projects/zeroless-tools/?badge=latest
+.. |License| image:: https://img.shields.io/pypi/l/zeroless-tools.svg?style=flat
+   :target: https://www.gnu.org/licenses/gpl.html
+.. |Codacy| image:: https://www.codacy.com/project/badge/7c9d91aa311747aaabeff3197fdbe1f8
+   :target: https://www.codacy.com/app/x8lucas8x/zeroless-tools
+.. |PyPi| image:: https://img.shields.io/pypi/v/zeroless-tools.svg?style=flat
+   :target: https://pypi.python.org/pypi/zeroless-tools
+
+.. _available_badges_end:
