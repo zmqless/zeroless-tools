@@ -11,8 +11,8 @@ from zeroless_tools import SocketExecutor
 
 class TestPair:
     def test_executors(self):
-        server_socket_executor = zeroless_tools.server.zeroserver('7892 pair read-only'.split())
-        client_socket_executor = zeroless_tools.client.zeroclient('7892 pair write-only'.split())
+        server_socket_executor = zeroless_tools.server.zeroserver('7731 pair read-only'.split())
+        client_socket_executor = zeroless_tools.client.zeroclient('7731 pair write-only'.split())
 
         assert isinstance(server_socket_executor, SocketExecutor.ReadOnlyPairExecutor)
         assert isinstance(client_socket_executor, SocketExecutor.WriteOnlyPairExecutor)
@@ -33,8 +33,8 @@ class TestPair:
             input.writelines(msg)
             input.seek(0)
 
-            server_socket_executor = zeroless_tools.server.zeroserver('7893 pair read-only'.split())
-            client_socket_executor = zeroless_tools.client.zeroclient('7893 pair write-only'.split())
+            server_socket_executor = zeroless_tools.server.zeroserver('7732 pair read-only'.split())
+            client_socket_executor = zeroless_tools.client.zeroclient('7732 pair write-only'.split())
 
             helpers.run(client_socket_executor)
             helpers.run(server_socket_executor)
@@ -64,8 +64,8 @@ class TestPair:
             input.writelines(msg)
             input.seek(0)
 
-            server_socket_executor = zeroless_tools.server.zeroserver('7893 pair write-only'.split())
-            client_socket_executor = zeroless_tools.client.zeroclient('7893 pair read-only'.split())
+            server_socket_executor = zeroless_tools.server.zeroserver('7733 pair write-only'.split())
+            client_socket_executor = zeroless_tools.client.zeroclient('7733 pair read-only'.split())
 
             helpers.run(server_socket_executor)
             helpers.run(client_socket_executor)

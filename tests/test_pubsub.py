@@ -13,8 +13,8 @@ from zeroless_tools import SocketExecutor
 
 class TestPubSub:
     def test_executors(self):
-        server_socket_executor = zeroless_tools.server.zeroserver('7894 pub'.split())
-        client_socket_executor = zeroless_tools.client.zeroclient('7894 sub'.split())
+        server_socket_executor = zeroless_tools.server.zeroserver('7721 pub'.split())
+        client_socket_executor = zeroless_tools.client.zeroclient('7721 sub'.split())
 
         assert isinstance(server_socket_executor, SocketExecutor.PubExecutor)
         assert isinstance(client_socket_executor, SocketExecutor.SubExecutor)
@@ -35,8 +35,8 @@ class TestPubSub:
             input.writelines(msg)
             input.seek(0)
 
-            server_socket_executor = zeroless_tools.server.zeroserver('7895 pub'.split())
-            client_socket_executor = zeroless_tools.client.zeroclient('7895 sub'.split())
+            server_socket_executor = zeroless_tools.server.zeroserver('7722 pub'.split())
+            client_socket_executor = zeroless_tools.client.zeroclient('7722 sub'.split())
 
             sleep(0.1)
             helpers.run(server_socket_executor)
