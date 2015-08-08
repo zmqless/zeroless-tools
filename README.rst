@@ -23,7 +23,7 @@ Installation
 
 .. code-block:: bash
 
-    $ pip install zeroless_tools
+    $ pip install zeroless-tools
 
 .. _install_content_end:
 
