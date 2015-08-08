@@ -35,7 +35,7 @@ setup(name='zeroless-tools',
           'Operating System :: MacOS :: MacOS X',
           'Operating System :: Microsoft :: Windows',
           'Operating System :: POSIX',
-          'License :: OSI Approved :: GNU General Public License v3'
+          'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)'
       ],
       keywords='pyzmq zeromq zmq ØMQ networking distributed socket client\
                server p2p publish subscribe request reply push pull\
