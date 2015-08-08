@@ -1,9 +1,7 @@
-import sys
-
 from .SocketExecutor import *
 
 def pub(socket, args):
-    return PubExecutor(socket, args.numParts, args.topic)
+    return PubExecutor(socket, args.numParts, args.topic, args.embedTopic)
 
 def sub(socket, args):
     return SubExecutor(socket, args.numParts, args.topics)
@@ -57,10 +55,14 @@ def add_sub_commands(parser):
     parser_pub = add_sender_command(subparsers, 'pub', 'This is a data distribution pattern', pub)
     parser_pub.add_argument('-t', '--topic', type=str, default='',
                             help='the topic that messages are published to (default=all)')
+    parser_pub.add_argument('-e', '--embedTopic', action='store_true', default=False,
+                            help='''set for the topic to be sent automatically as the
+                                 first part (i.e. frame) of every published message
+                                 (default=False)''')
 
     parser_sub = add_receiver_command(subparsers, 'sub', 'This is a data distribution pattern', sub)
-    parser_sub.add_argument('-t', '--topics', type=list, default=[''],
-                            help='the list of topics to subscribe to (default=all)')
+    parser_sub.add_argument('-t', '--topics', type=str, nargs='+', default=[''],
+                            help='the list of topics, separated by whitespaces, to subscribe to (default=all)')
 
     parser_push = add_sender_command(subparsers, 'push',
                                      'This is a parallel task distribution and collection pattern', push)

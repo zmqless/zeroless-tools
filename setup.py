@@ -20,13 +20,13 @@ def readme():
     with open('README.rst') as f:
         return f.read()
 
-setup(name='zeroless_tools',
-      version='0.1.1',
+setup(name='zeroless-tools',
+      version='0.2.0',
       description='CLI Tools for ZeroMQ™',
       long_description=readme(),
       packages=['zeroless_tools'],
       classifiers=[
-          'Development Status :: 3 - Alpha',
+          'Development Status :: 4 - Beta',
           'Intended Audience :: Developers',
           'Programming Language :: Python :: 3',
           'Topic :: System :: Networking',
@@ -37,8 +37,11 @@ setup(name='zeroless_tools',
           'Operating System :: POSIX',
           'License :: OSI Approved :: GNU General Public License v3'
       ],
-      keywords='zeroless pyzmq zeromq zmq networking distributed socket',
-      url='https://github.com/zmqless/zeroless_tools',
+      keywords='pyzmq zeromq zmq ØMQ networking distributed socket client\
+               server p2p publish subscribe request reply push pull\
+               communication internet backend microservices zeroless\
+               python-zeroless cli',
+      url='https://github.com/zmqless/zeroless-tools',
       author='Lucas Lira Gomes',
       author_email='x8lucas8x@gmail.com',
       license='GPLv3',
